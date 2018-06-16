@@ -4,7 +4,7 @@ function io(url, options) {"use strict";
     options = url;
     url = options.url;
   }
-  var JSON = options.JSON || JSON;
+  var JSON = (options || {}).JSON || JSON;
   var connected = false;
   var queue = [];
   var listeners = {};
