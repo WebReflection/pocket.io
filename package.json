@@ -1,6 +1,6 @@
 {
   "name": "pocket.io",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A minimalistic version of socket.io",
   "main": "index.js",
   "scripts": {
