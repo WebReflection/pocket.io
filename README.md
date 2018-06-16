@@ -32,7 +32,7 @@ Try `node test/chat-express.js` and visit `localhost:3000` to see the classic ch
 ```js
 var app = require('express')();
 var http = require('http').Server(app);
-var io = require('../')(http);
+var io = require('pocket.io')(http);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/chat.html');
