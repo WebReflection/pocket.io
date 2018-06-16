@@ -1,3 +1,5 @@
+/*! (c) Andrea Giammarchi (ISC) */
+
 var http = require('http');
 var path = require('path');
 var uuid = require('uuid');
