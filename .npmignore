@@ -1,3 +1,4 @@
 node_modules/
 test/
+client.js
 package-lock.json

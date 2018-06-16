@@ -1,5 +1,7 @@
 function io(url) { "use strict";
   /*! (c) Andrea Giammarchi (ISC) */
+  var connected = false;
+  var queue = [];
   var listeners = {};
   var parts = new URL(url || location.href);
   var socket = new WebSocket([
@@ -10,6 +12,9 @@ function io(url) { "use strict";
   ].join(''));
   socket.onopen = function (event) {
     pocket.emit('connect');
+    connected = true;
+    while (queue.length)
+      socket.send(queue.shift());
   };
   socket.onmessage = function (event) {
     var info = JSON.parse(event.data);
@@ -36,10 +41,14 @@ function io(url) { "use strict";
       return pocket;
     },
     emit: function (type, data) {
-      socket.send(JSON.stringify({
+      var json = JSON.stringify({
         type: type,
         data: data
-      }));
+      });
+      if (connected)
+        socket.send(json);
+      else
+        queue.push(json);
       return pocket;
     },
     listeners: function (type) {

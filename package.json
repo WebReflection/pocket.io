@@ -4,6 +4,7 @@
   "description": "A minimalistic version of socket.io",
   "main": "index.js",
   "scripts": {
+    "build": "npm run min",
     "min": "uglifyjs client.js --support-ie8 --comments=/^!/ -c -m -o min.js"
   },
   "repository": {
