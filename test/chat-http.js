@@ -1,11 +1,12 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('./')(http);
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/chat.html');
+var fs = require('fs');
+var http = require('http').createServer((req, res) => {
+  res.writeHead(200, 'OK', {
+    'Content-Type': 'text/html; charset=utf-8'
+  });
+  fs.createReadStream(__dirname + '/chat.html').pipe(res);
 });
 
+var io = require('../')(http);
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('chat message', function (msg) {
