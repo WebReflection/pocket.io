@@ -12,11 +12,12 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
-    <script src="/pocket.io/pocket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://unpkg.com/flatted@0.2.2/min.js"></script>
+    <script src="/pocket.io/pocket.io.js"></script>
     <script>
       $(function () {
-        var socket = io();
+        var socket = io({JSON: Flatted});
         socket.on('connect', function () {
           console.log(socket.id);
         });

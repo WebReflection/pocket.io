@@ -14,8 +14,16 @@ var client = {
   )
 };
 
-module.exports = function (app) {
+module.exports = function (app, options) {
+  if (
+    arguments.length === 1 &&
+    Object.getPrototypeOf(app) === Object.prototype
+  ) {
+    options = app;
+    app = options.server;
+  }
   var server;
+  var SR = options && options.JSON || JSON;
   if (app instanceof http.Server) {
     var request = app._events.request;
     server = app;
@@ -62,7 +70,7 @@ module.exports = function (app) {
       emit('disconnect');
     });
     socket.on('message', function (data) {
-      const info = JSON.parse(data);
+      const info = SR.parse(data);
       if (info.type === 'connect') {
         socket.send(asJSON(
           info.type,
@@ -94,14 +102,13 @@ module.exports = function (app) {
     ioemit('error', error);
   });
   return io;
+  function asJSON(type, data) {
+    return SR.stringify({
+      type: type,
+      data: data
+    });
+  }
 };
-
-function asJSON(type, data) {
-  return JSON.stringify({
-    type: type,
-    data: data
-  });
-}
 
 function responder(req, res, next) {
   res.writeHead(200, 'OK', {

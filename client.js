@@ -1,5 +1,10 @@
-function io(url) { "use strict";
+function io(url, options) {"use strict";
   /*! (c) Andrea Giammarchi (ISC) */
+  if (typeof url === 'object') {
+    options = url;
+    url = options.url;
+  }
+  var JSON = options.JSON || JSON;
   var connected = false;
   var queue = [];
   var listeners = {};

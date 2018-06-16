@@ -32,12 +32,12 @@ Try `node test/chat-express.js` and visit `localhost:3000` to see the classic ch
 ```js
 var app = require('express')();
 var http = require('http').Server(app);
+var io = require('../')(http);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/chat.html');
 });
 
-var io = require('../')(http);
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('chat message', function (msg) {
@@ -51,4 +51,19 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+```
+
+### API differences
+
+You can specify a JSON like parser through the option.
+
+As example, this is how you'd use recursion compatible serialization via the [flatted](https://github.com/WebReflection/flatted#flatted) module.
+
+```js
+// Node.js
+io(server, {JSON: require('flatted/cjs')});
+
+// client, after having Flatted exposed somehow, i.e.
+// <script src="//unpkg.com/flatted"></script>
+io({JSON: Flatted});
 ```

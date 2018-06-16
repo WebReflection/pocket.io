@@ -6,7 +6,7 @@ var http = require('http').createServer((req, res) => {
   fs.createReadStream(__dirname + '/chat.html').pipe(res);
 });
 
-var io = require('../')(http);
+var io = require('../')(http, {JSON: require('flatted')});
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('chat message', function (msg) {

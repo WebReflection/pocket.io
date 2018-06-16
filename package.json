@@ -25,6 +25,7 @@
   "homepage": "https://github.com/WebReflection/pocket.io#readme",
   "devDependencies": {
     "express": "^4.16.3",
+    "flatted": "^0.2.2",
     "uglify-es": "^3.3.9"
   },
   "dependencies": {
