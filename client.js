@@ -81,6 +81,7 @@ function io(url) { "use strict";
       return pocket.emit('message', data);
     }
   };
+  pocket.disconnect = pocket.close;
   return pocket;
   function emit(listeners) {
     (listeners || []).forEach(
