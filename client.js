@@ -4,7 +4,7 @@ function io(url, options) {"use strict";
     options = url;
     url = options.url;
   }
-  var JSON = (options || {}).JSON || JSON;
+  var SR = (options || {}).JSON || JSON;
   var connected = false;
   var queue = [];
   var listeners = {};
@@ -22,7 +22,7 @@ function io(url, options) {"use strict";
       socket.send(queue.shift());
   };
   socket.onmessage = function (event) {
-    var info = JSON.parse(event.data);
+    var info = SR.parse(event.data);
     var cbs = listeners[info.type];
     if (info.type === 'connect') {
       pocket.id = info.data;
@@ -46,7 +46,7 @@ function io(url, options) {"use strict";
       return pocket;
     },
     emit: function (type, data) {
-      var json = JSON.stringify({
+      var json = SR.stringify({
         type: type,
         data: data
       });
