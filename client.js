@@ -1,7 +1,7 @@
 function io(url, options) {"use strict";
   /*! (c) Andrea Giammarchi (ISC) */
   if (typeof url === 'object') {
-    options = url;
+    options = url || options;
     url = options.url;
   }
   var SR = (options || {}).JSON || JSON;
