@@ -12,23 +12,34 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://unpkg.com/flatted@0.2.2/min.js"></script>
-    <script src="/pocket.io/pocket.io.js"></script>
+    <script defer src="//unpkg.com/flatted"></script>
+    <script defer src="//unpkg.com/lightdown"></script>
+    <script defer src="/pocket.io/pocket.io.js"></script>
     <script>
-      $(function () {
+      document.addEventListener('DOMContentLoaded', function () {
         var socket = io({JSON: Flatted});
+        var $ = function (css) { return document.querySelector(css); };
         socket.on('connect', function () {
           console.log(socket.id);
         });
-        socket.on('chat message', function(msg){
-          $('#messages').append($('<li>').text(msg));
+        socket.on('chat message', function (info) {
+          $('#messages').appendChild(
+            document.createElement('li')
+          ).innerHTML = lightdown(
+            info.message.replace(/<|>/g, function ($) {
+              return {'<': '&lt;', '>': '&gt;'}[$];
+            })
+          );
         });
-        $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
+        $('form').onsubmit = function () {
+          // unnecessary, just for test purpose
+          // send an object instead of a string
+          socket.emit('chat message', {
+            message: $('#m').value
+          });
+          $('#m').value = '';
           return false;
-        });
+        };
       });
     </script>
   </head>
