@@ -1,7 +1,7 @@
 pocket.io
 =========
 
-A minimalistic version of [socket.io](https://socket.io).
+A minimalistic version of [socket.io](https://socket.io) that weights about 1K instead of 60K.
 
 ```html
 <!-- you require it on the client same way -->

@@ -1,7 +1,7 @@
 {
   "name": "pocket.io",
   "version": "0.1.4",
-  "description": "A minimalistic version of socket.io",
+  "description": "A minimalistic version of socket.io that weights about 1K instead of 60K",
   "main": "index.js",
   "scripts": {
     "build": "npm run min",
