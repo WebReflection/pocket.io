@@ -90,7 +90,7 @@ module.exports = function (app, options) {
             client !== socket &&
             client.readyState === WebSocket.OPEN
           ) {
-            client.send(data);
+            client.send(asJSON(type, data));
           }
         });
       }
