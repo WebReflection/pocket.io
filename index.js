@@ -70,7 +70,7 @@ module.exports = function (app, options) {
       emit('disconnect');
     });
     socket.on('message', function (data) {
-      const info = SR.parse(data);
+      var info = SR.parse(data);
       if (info.type === 'connect') {
         socket.send(asJSON(
           info.type,
@@ -85,12 +85,13 @@ module.exports = function (app, options) {
     };
     emitter.broadcast = {
       emit: function (type, data) {
+        var toBroadcast = asJSON(type, data);
         ws.clients.forEach(function each(client) {
           if (
             client !== socket &&
             client.readyState === WebSocket.OPEN
           ) {
-            client.send(asJSON(type, data));
+            client.send(toBroadcast);
           }
         });
       }
